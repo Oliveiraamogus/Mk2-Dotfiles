@@ -1,33 +1,13 @@
-Code*-*OSS/
+*
 
-**/Code - OSS/
+!hypr/
 
-'Code - OSS'/
+!kitty/
 
-dconf/
+!legacy_scripts/
 
-discord/
+!quickshell/
 
-Electron/
+!themes/
 
-go/
-
-gtk-3.0/
-
-mozilla/
-
-pulse/
-
-session/
-
-yay/
-
-baloofileinformationrc
-
-dolphinrc
-
-filetypesrc
-
-mimeapps.list
-
-
+!.gitignore
