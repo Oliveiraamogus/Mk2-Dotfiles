@@ -1,0 +1,15 @@
+#!/bin/bash
+#cp /home/manel/escolinha/scripts/blu_theme/hyprland_blu.conf /home/manel/.config/hypr/hyprland.conf
+hyprctl keyword general:col.active_border 'rgba(7895B4ee)'
+hyprctl keyword general:col.inactive_border 'rgba(1e1e2eaa)'
+
+kitten theme 'Atelier Lakeside Dark'
+
+cp /home/manel/escolinha/scripts/blu_theme/style_anyrun_b.css /home/manel/.config/anyrun/style.css
+pkill waybar
+
+hyprctl hyprpaper wallpaper "eDP-1,/home/manel/backgrounds/b.png"
+hyprctl hyprpaper wallpaper "HDMI-A-1,/home/manel/backgrounds/b.png"
+
+exec waybar -s /home/manel/escolinha/scripts/blu_theme/style_light.css
+exit

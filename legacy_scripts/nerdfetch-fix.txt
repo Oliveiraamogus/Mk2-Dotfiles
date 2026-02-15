@@ -1,0 +1,9 @@
+
+${hn}              ${nc}${USER}${red}@${reset}${hn}${host}${reset} 
+${hn}              ${hn}${osi}  ${c1}${os}${reset}
+${hn}              ${hn}${ki}  ${c1}${kernel}${reset}
+${hn}              ${hn}${ri}  ${c1}${RAM}${memstat} ${mempercent}
+${hn}      __      ${hn}${pi}  ${c1}${packages} (${manager})${reset}
+${hn}     :  :     ${hn}${ui}  ${c1}${uptime}${reset}
+${hn} __.º    º.__ ${hn}${ci}  ${red}███${green}███${yellow}███${blue}███${magenta}███${cyan}███${reset}
+EOF

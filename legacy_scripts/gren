@@ -1,0 +1,19 @@
+#!/bin/bash
+#cp /home/manel/escolinha/scripts/waybar_dark/hyprland_gren.conf /home/manel/.config/hypr/hyprland.conf
+hyprctl keyword general:col.active_border 'rgb(4AD29E)'
+hyprctl keyword general:col.inactive_border 'rgb(086C46)'
+
+kitten theme 'Base2Tone Field Dark'
+#kitten theme 'Breath2'
+
+cp /home/manel/escolinha/scripts/waybar_dark/style_anyrun_g.css /home/manel/.config/anyrun/style.css
+
+pkill waybar
+#hyprctl keyword decoration:active_opacity 0.9
+#hyprctl keyword decoration:inactive_opacity 0.8
+#cp /home/manel/escolinha/scripts/waybar_dark/style_dark.css /home/manel/.config/waybar/style.css
+hyprctl hyprpaper wallpaper "eDP-1,/home/manel/backgrounds/alena-aenami-lights1k1.jpg"
+hyprctl hyprpaper wallpaper "HDMI-A-1,/home/manel/backgrounds/alena-aenami-lights1k1.jpg"
+#exec waybar
+exec waybar -s /home/manel/escolinha/scripts/waybar_dark/style_dark.css
+exit

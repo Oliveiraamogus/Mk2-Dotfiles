@@ -1,0 +1,17 @@
+#!/bin/bash
+#cp /home/manel/escolinha/scripts/red_theme/hyprland_red.conf /home/manel/.config/hypr/hyprland.conf
+hyprctl keyword general:col.active_border 'rgb(B8503F)'
+hyprctl keyword general:col.inactive_border 'rgb(EC9B76)'
+
+kitten theme 'Birds Of Paradise'
+
+cp /home/manel/escolinha/scripts/red_theme/style_anyrun_r.css /home/manel/.config/anyrun/style.css
+hyprctl hyprpaper wallpaper "eDP-1,/home/manel/backgrounds/738999.png"
+hyprctl hyprpaper wallpaper "HDMI-A-1,/home/manel/backgrounds/738999.png"
+#hyprctl keyword decoration:active_opacity 0.8
+#hyprctl keyword decoration:inactive_opacity 0.7
+#cp /home/manel/escolinha/scripts/red_theme/style_red.css /home/manel/.config/waybar/style.css
+#exec waybar
+pkill waybar
+exec waybar -s /home/manel/escolinha/scripts/red_theme/style_red.css
+exit

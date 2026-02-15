@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec="/home/manel/floorp_files/floorp" 
+Name=floorp
+Categories=Application;Browser
+Comment=floorp
+Icon=/home/manel/escolinha/scripts/floorp/Floorp-icon.png
