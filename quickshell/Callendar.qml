@@ -5,14 +5,20 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import "./helloworld.qml"
+import "./shell.qml"
+PanelWindow{
+    id: toplevel
 
-PanelWindow {
-    
+    anchors {
+        top: true
+        //left: true
+        //right: true
+    }
 
-    visible: true
-    anchors.top: true
-    anchors.right: true
-    implicitHeight: 30
-    color: root.colBg
+    PopupWindow {
+        id: callendar
+
+        visible: true
+        height: 20
+    }
 }

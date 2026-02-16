@@ -1,0 +1,9 @@
+// <Anyrun config dir>/symbols.ron
+Config(
+  prefix: "",
+
+  symbols: {
+    "shrug": "\\_(*u*)_//",
+  },
+  max_entries: 0,
+)
