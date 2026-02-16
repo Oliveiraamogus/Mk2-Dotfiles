@@ -1,0 +1,50 @@
+{
+  "name": "gren",
+  "id": "gren",
+  "description": "more like dak gren really",
+  "author": "manel",
+  "version": "1.0.0",
+  "supportsModes": true,
+  "defaultMode": "dark",
+  "preview": {
+    "background": "#086C46",
+    "accent": "#4AD29E",
+    "description": "gren"
+  },
+  "colors": {
+    "primary": "#4AD29E",
+    "secondary": "#086C46"
+  },
+  "fonts": {
+    "display": {
+      "family": "JetBrainsMono Nerd Font",
+      "pixelSize": 32,
+      "weight": "Bold"
+    },
+    "heading": {
+      "family": "JetBrainsMono Nerd Font",
+      "pixelSize": 24,
+      "weight": "DemiBold"
+    },
+    "title": {
+      "family": "JetBrainsMono Nerd Font",
+      "pixelSize": 18,
+      "weight": "Medium"
+    },
+    "body": {
+      "family": "JetBrainsMono Nerd Font",
+      "pixelSize": 14,
+      "weight": "Normal"
+    },
+    "caption": {
+      "family": "JetBrainsMono Nerd Font",
+      "pixelSize": 12,
+      "weight": "Normal"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "pixelSize": 14,
+      "weight": "Normal"
+    }
+  }
+}

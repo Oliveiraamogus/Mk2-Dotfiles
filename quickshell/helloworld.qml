@@ -8,21 +8,22 @@ import QtQuick.Layouts
 import "./Theme.qml"
 
 PanelWindow {
+
     id: root
 
     // Theme
-    property color colBg: "#1a1b26"
-    property color colFg: "#a9b1d6"
-    property color colMuted: "#444b6a"
-    property color colCyan: "#0db9d7"
-    property color colBlue: "#7aa2f7"
-    property color colYellow: "#e0af68"
-    property string fontFamily: "JetBrainsMono Nerd Font"
-    property int fontSize: 14
+    property color colBg: Theme.jsonData.colors.background
+    property color colPri: Theme.jsonData.colors.primary
+    property color colSec: Theme.jsonData.colors.secondary
+    property string fontFamily: Theme.jsonData.fonts.body.family
+    property int fontSize: Theme.jsonData.fonts.body.pixelSize
 
     // System data
     property int cpuUsage: 0
     property int memUsage: 0
+    property int batUsage: 0
+    property bool isCharging: false
+    property bool isCharged: false
     property var lastCpuIdle: 0
     property var lastCpuTotal: 0
 
@@ -33,6 +34,7 @@ PanelWindow {
     anchors.right: true
     implicitHeight: 30
     color: root.colBg
+
 
     RowLayout {
         anchors.fill: parent
@@ -46,7 +48,7 @@ PanelWindow {
                 property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
                 property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
                 text: index + 1
-                color: isActive ? root.colCyan : (ws ? root.colBlue : root.colMuted)
+                color: isActive ? root.colPri : (ws ? root.colPri : root.colSec)
                 font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
                 MouseArea {
                     anchors.fill: parent
@@ -56,6 +58,49 @@ PanelWindow {
         }
 
         Item { Layout.fillWidth: true }
+
+        // Clock
+        Text {
+            id: clock
+            //This gives a warning, TODO: fix, maybe using Layout.alignment
+            anchors.centerIn: parent
+            color: root.colPri
+            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+            text: Qt.formatDateTime(new Date(), "ddd, MMM dd - HH:mm")
+            Timer {
+                interval: 1000
+                running: true
+                repeat: true
+                onTriggered: clock.text = Qt.formatDateTime(new Date(), "ddd, MMM dd - HH:mm")
+            }
+            Process {
+                id: callendar
+                command: ["sh", "-c", "quickshell --path ~/.config/quickshell/Callendar.qml"]
+                Component.onCompleted: running = false
+            }
+            MouseArea {
+                anchors.fill: parent
+                acceptedButtons: Qt.RightButton
+                onClicked: (mouse) => {
+                    if (mouse.button == Qt.RightButton){
+                        if (callendar.running == true)
+                            callendar.running = false
+                        else
+                            callendar.running = true
+                    }
+                }     
+            }
+        }
+
+        
+        Text{
+            text: "Theme: " + Theme.jsonData.name
+            color: root.colPri
+            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+        }
+        Rectangle { width: 1; height: 16; color: root.colSec }
+
+
 
         // CPU
         Text {
@@ -86,11 +131,11 @@ PanelWindow {
             }
 
             text: "CPU: " + cpuUsage + "%"
-            color: root.colYellow
+            color: root.colPri
             font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
         }
 
-        Rectangle { width: 1; height: 16; color: root.colMuted }
+        Rectangle { width: 1; height: 16; color: root.colSec }
 
         // Memory
         Text {
@@ -121,41 +166,65 @@ PanelWindow {
 
 
             text: "Mem: " + memUsage + "%"
-            color: root.colCyan
+            color: root.colPri
             font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
         }
 
-        Rectangle { width: 1; height: 16; color: root.colMuted }
+        Rectangle { width: 1; height: 16; color: root.colSec }
 
-        // Clock
+        //Battery
         Text {
-            id: clock
-            color: root.colBlue
-            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-            text: Qt.formatDateTime(new Date(), "ddd, MMM dd - HH:mm")
-            Timer {
-                interval: 1000
-                running: true
-                repeat: true
-                onTriggered: clock.text = Qt.formatDateTime(new Date(), "ddd, MMM dd - HH:mm")
+            Process {
+                id: batState
+                command: ["sh", "-c", "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E state"]
+                stdout: SplitParser {
+                    onRead: data => {
+                        if (!data) return
+                        var parts = data.trim().split(/\s+/)
+                        if (parts[1] == "fully-charged") {
+                            isCharged = true
+                            return
+                        } 
+                        if (parts[1] == "charging") {
+                            isCharging = true
+                            return
+                        }
+                        else {
+                            isCharged = false
+                            isCharging = false
+                        }
+                    }
+                }
+                Component.onCompleted: running = true
             }
             Process {
-                id: callendar
-                command: ["sh", "-c", "quickshell --path ~/.config/quickshell/Callendar.qml"]
-                Component.onCompleted: running = false
-            }
-            MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.RightButton
-                onClicked: (mouse) => {
-                    if (mouse.button == Qt.RightButton){
-                        if (callendar.running == true)
-                            callendar.running = false
-                        else
-                            callendar.running = true
+                id: batAmount
+                command: ["sh", "-c", "upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E percentage"]
+                stdout: SplitParser {
+                    onRead: data => {
+                        if (!data) return
+                        var parts = data.trim().split(/\s+/)
+                        batUsage = parseInt(parts[1])
                     }
-                }     
+                }
+                Component.onCompleted: running = true
             }
+
+            Timer {
+                interval: 500
+                running: true
+                repeat: true
+                onTriggered: {
+                    batState.running = true
+                    batAmount.running = true
+                }
+            }
+
+            text: isCharged ? "Charged" : (isCharging ? "Bat: " + batUsage + "% 🔋" : "Bat: " + batUsage + "%")
+            color: root.colPri
+            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+
         }
+
     }
 }

@@ -2,19 +2,34 @@ pragma Singleton
 
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Io
 import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
+FloatingWindow {
+    id: themes
+    visible: false
 
-Singleton {
-    id: root
-    property color colBg: "#1a1b26"
-    property color colFg: "#a9b1d6"
-    property color colMuted: "#444b6a"
-    property color colCyan: "#0db9d7"
-    property color colBlue: "#7aa2f7"
-    property color colYellow: "#e0af68"
-    property string fontFamily: "JetBrainsMono Nerd Font"
-    property int fontSize: 14
+    FileView {
+        id: jsonFile
+        path: "/home/manel/.config/themes/current.json"
+        
+
+        blockLoading: true
+
+    }
+
+    readonly property var jsonData: JSON.parse(jsonFile.text())
+
+    color: jsonData.colors.secondary
+    
+    //For debugging
+    // Text {
+        // anchors.centerIn: parent
+        // color: jsonData.colors.primary 
+        // text: jsonData.colors.primary
+        // 
+    // }
+
 }
