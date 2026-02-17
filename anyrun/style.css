@@ -1,78 +1,76 @@
-* {
-    all: unset;
-    font-size: 1rem;
-  }
-  
-#window,
-#match,
-#entry,
-#plugin,
-#main { 
-  background: transparent; 
+@define-color accent #086C46;
+@define-color bg-color #050912AA;
+@define-color fg-color #eeeeee;
+@define-color desc-color #cccccc;
+
+window {
+  background: transparent;
 }
 
-#match.activatable {
-  border-radius: 10px;
-  padding: 3px 3px;
-  margin-top: 1px;
-}
-#match.activatable:first-child { margin-top: 9px; }
-#match.activatable:last-child { margin-bottom: 1px; }
-
-#plugin:hover #match.activatable {
-  border-radius: 10px;
-  padding: .3rem;
-  margin-top: .01rem;
-  margin-bottom: 0;
-}
-
-
-#match:selected {
-  color: rgba(0,0,0,0.7);
-  background: #086C46;
-  border-radius: 10px;
-}
-
-#entry {
-  border-radius: 10px;
-  margin: 3px;
-  padding: 5px 5px;
-  caret-color: #086C46;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-list > #plugin {
-  border-top: 1px solid #086C46;
-  margin: 3px;
-  padding-top: 3px;
-  padding-left: 3px;
-  font-weight: 400;
-}
-
-list > #plugin:first-child { 
-  margin-top: .3rem;
-}
-
-list > #plugin:last-child { 
-  margin-bottom: .3rem; 
-}
-
-list > #plugin:hover { 
-  padding: 5px; 
-}
-
-box#main {
-  border-color: #086C46;    
-  color: rgba(0,0,0,0.7);
-  border-width: 2px;
-  border-style: solid;
-  margin-top: 15px;
-  background-color: rgba(74, 210, 158, 0.6);
-  border-radius: 5px;
+box.main {
   padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  border: 2px solid @accent;
+  background-color: @bg-color;
+  box-shadow: 0 0 5px black;
 }
 
-zlabel#plugin {
-  font-size:20px;
+
+text {
+  min-height: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  color: @fg-color;
+}
+
+.matches {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10px;
+}
+
+box.plugin:first-child {
+  margin-top: 5px;
+}
+
+box.plugin.info {
+  min-width: 200px;
+}
+
+list.plugin {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+label.match {
+  color: @fg-color;
+}
+
+label.match.description {
+  font-size: 10px;
+  color: @desc-color;
+}
+
+label.plugin.info {
+  font-size: 14px;
+  color: @fg-color;
+}
+
+.match {
+  background: transparent;
+}
+
+.match:selected {
+  border-left: 4px solid @accent;
+  background: transparent;
+  animation: fade 0.1s linear;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

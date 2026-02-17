@@ -19,6 +19,8 @@ PanelWindow {
     property int fontSize: Theme.jsonData.fonts.body.pixelSize
 
     // System data
+    property bool volMuted: false
+    property int volAmount: 0
     property int cpuUsage: 0
     property int memUsage: 0
     property int batUsage: 0
@@ -95,10 +97,59 @@ PanelWindow {
 
         Item { Layout.fillWidth: true }
 
-        
+        // Theme
         Text{
             Layout.alignment: Qt.AlignRight
             text: "Theme: " + Theme.jsonData.name
+            color: root.colPri
+            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+        }
+
+        Rectangle { Layout.alignment: Qt.AlignRight; width: 1; height: 16; color: root.colSec }
+
+
+        // Sound
+        Text{
+            Process {
+                id: mutProc
+                command: ["sh", "-c", "pamixer --get-mute"]
+                stdout: SplitParser {
+                onRead: data => {
+                    if (!data) return
+                    var p = data.trim().split(/\s+/)
+                    if (p == "true")
+                        volMuted = true
+                    else volMuted = false
+                }
+            }
+                Component.onCompleted: running = true
+            }
+
+            Process {
+                id: volProc
+                command: ["sh", "-c", "pamixer --get-volume"]
+                stdout: SplitParser {
+                onRead: data => {
+                    if (!data) return
+                    var p = data.trim().split(/\s+/)
+                    volAmount = parseInt(p)
+                }
+            }
+                Component.onCompleted: running = true
+            }
+
+            Timer {
+                interval: 100        // Every half second
+                running: true         // Start immediately
+                repeat: true          // Keep going forever
+                onTriggered: {
+                    mutProc.running = true
+                    volProc.running = true
+                }
+            }
+
+            Layout.alignment: Qt.AlignRight
+            text: {volMuted ? "🔇" : (volAmount < 50) ? "🔈 " + volAmount : (volAmount < 75) ? "🔉 " + volAmount : "🔊 " + volAmount}
             color: root.colPri
             font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
         }

@@ -13,7 +13,8 @@
   },
   "colors": {
     "primary": "#4AD29E",
-    "secondary": "#086C46"
+    "secondary": "#086C46",
+    "background": "#AA050912"
   },
   "fonts": {
     "display": {
