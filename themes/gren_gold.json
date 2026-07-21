@@ -1,7 +1,7 @@
 {
-  "name": "gren",
-  "id": "gren",
-  "description": "more like dak gren really",
+  "name": "gren_gold",
+  "id": "gren_gold",
+  "description": "more like dak gren_gold really",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
@@ -9,7 +9,7 @@
   "preview": {
     "background": "#6B6540",
     "accent": "#E3BE95",
-    "description": "gren"
+    "description": "gren_gold"
   },
   "colors": {
     "primary": "#E3BE95",

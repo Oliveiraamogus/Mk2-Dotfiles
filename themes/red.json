@@ -1,7 +1,7 @@
 {
-  "name": "gren",
-  "id": "gren",
-  "description": "more like dak gren really",
+  "name": "red",
+  "id": "red",
+  "description": "more like dak red really",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
@@ -9,7 +9,7 @@
   "preview": {
     "background": "#77361A",
     "accent": "#F0B75F",
-    "description": "gren"
+    "description": "red"
   },
   "colors": {
     "primary": "#F0B75F",

@@ -1,7 +1,7 @@
 {
-  "name": "gren",
-  "id": "gren",
-  "description": "more like dak gren really",
+  "name": "wite",
+  "id": "wite",
+  "description": "more like wite really",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
@@ -9,7 +9,7 @@
   "preview": {
     "background": "#785D3A",
     "accent": "#473A24",
-    "description": "gren"
+    "description": "wite"
   },
   "colors": {
     "primary": "#473A24",

@@ -1,20 +1,20 @@
 {
-  "name": "blac",
-  "id": "blac",
-  "description": "darker theme",
+  "name": "ligt_gren",
+  "id": "ligt_gren",
+  "description": "lighter gren theme",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
   "defaultMode": "dark",
   "preview": {
-    "background": "#3A3D42",
-    "accent": "#D0D3D2",
-    "description": "blac"
+    "background": "#223A04",
+    "accent": "#989001",
+    "description": "ligt_gren"
   },
   "colors": {
-    "primary": "#D0D3D2",
-    "secondary": "#3A3D42",
-    "background": "#AA080F10"
+    "primary": "#989001",
+    "secondary": "#223A04",
+    "background": "#AA54657d"
   },
   "fonts": {
     "display": {
