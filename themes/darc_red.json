@@ -1,20 +1,20 @@
 {
-  "name": "gren",
-  "id": "gren",
-  "description": "more like dak gren really",
+  "name": "darc_red",
+  "id": "darc_red",
+  "description": "darker red theme",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
   "defaultMode": "dark",
   "preview": {
-    "background": "#086C46",
-    "accent": "#4AD29E",
-    "description": "gren"
+    "background": "#64250B",
+    "accent": "#F27B0B",
+    "description": "darc_red"
   },
   "colors": {
-    "primary": "#4AD29E",
-    "secondary": "#086C46",
-    "background": "#AA050912"
+    "primary": "#F27B0B",
+    "secondary": "#64250B",
+    "background": "#AA321207"
   },
   "fonts": {
     "display": {

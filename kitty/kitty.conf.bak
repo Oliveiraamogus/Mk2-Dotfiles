@@ -1,7 +1,7 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
 # BEGIN_KITTY_THEME
-# Atelier Heath Dark
+# Adwaita dark
 include current-theme.conf
 # END_KITTY_THEME
 
@@ -317,7 +317,7 @@ map alt+f6 kitten themes 'Atelier Lakeside Dark'
 #: Stop blinking cursor after the specified number of seconds of
 #: keyboard inactivity. Set to zero to never stop blinking.
 
-# cursor_trail 0
+cursor_trail 1
 
 #: Set this to a value larger than zero to enable a "cursor trail"
 #: animation. This is an animation that shows a "trail" following the
@@ -357,7 +357,7 @@ map alt+f6 kitten themes 'Atelier Lakeside Dark'
 
 #: Scrollback {{{
 
-# scrollback_lines 2000
+scrollback_lines 50000
 
 #: Number of lines of history to keep in memory for scrolling back.
 #: Memory is allocated on demand. Negative numbers are (effectively)
