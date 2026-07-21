@@ -226,100 +226,135 @@ Scope {
 
             Item {
                 anchors.fill: parent
-                anchors.margins: 8
 
-                // Left: workspaces
-                Row {
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 8
+                // Scroll anywhere on the bar to change workspace
+                WheelHandler {
+                    acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+                    onWheel: (event) => {
+                        if (event.angleDelta.y > 0)
+                            Hyprland.dispatch("workspace -1")
+                        else if (event.angleDelta.y < 0)
+                            Hyprland.dispatch("workspace +1")
+                    }
+                }
 
-                    Repeater {
-                        model: 9
+                Item {
+                    anchors.fill: parent
+                    anchors.margins: 8
+
+                    // Left: workspaces
+                    Row {
+                        anchors.left: parent.left
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 8
+
+                        Repeater {
+                            model: 9
+                            Text {
+                                property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
+                                property bool isActive: bar.hyprMonitor?.activeWorkspace?.id === (index + 1)
+                                text: index + 1
+                                color: isActive ? root.colPri : (ws ? root.colPri : root.colSec)
+                                font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                                MouseArea {
+                                    anchors.fill: parent
+                                    onClicked: Hyprland.dispatch("workspace " + (index + 1))
+                                }
+                            }
+                        }
+                    }
+
+                    // Center: clock (true bar center, independent of side widths)
+                    Text {
+                        id: clockLabel
+                        anchors.centerIn: parent
+                        color: root.colPri
+                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        text: root.clockText
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.LeftButton
+                            onClicked: (mouse) => {
+                                if (mouse.button == Qt.LeftButton) {
+                                    powerPopup.visible = false
+                                    if (!calendarPopup.visible)
+                                        calendarWidget.goToToday()
+                                    calendarPopup.visible = !calendarPopup.visible
+                                }
+                            }
+                        }
+                    }
+
+                    // Right: status modules
+                    Row {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 8
+
                         Text {
-                            property var ws: Hyprland.workspaces.values.find(w => w.id === index + 1)
-                            property bool isActive: bar.hyprMonitor?.activeWorkspace?.id === (index + 1)
-                            text: index + 1
-                            color: isActive ? root.colPri : (ws ? root.colPri : root.colSec)
+                            text: "Theme: " + Theme.jsonData.name
+                            color: root.colPri
+                            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        }
+
+                        Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
+
+                        Text {
+                            text: root.volMuted ? "🔇" : (root.volAmount < 50) ? "🔈 " + root.volAmount : (root.volAmount < 75) ? "🔉 " + root.volAmount : "🔊 " + root.volAmount
+                            color: root.colPri
+                            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        }
+
+                        Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
+
+                        Text {
+                            text: "CPU: " + root.cpuUsage + "%"
+                            color: root.colPri
+                            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        }
+
+                        Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
+
+                        Text {
+                            text: "Mem: " + root.memUsage + "%"
+                            color: root.colPri
+                            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        }
+
+                        Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
+
+                        Text {
+                            text: root.networkConnected ? "🛜 " + root.network : "Disconected"
+                            color: root.colPri
+                            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        }
+
+                        Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
+
+                        Text {
+                            text: root.isCharged ? "Charged" : (root.isCharging ? "Bat: " + root.batUsage + "% ⚡" : "Bat: " + root.batUsage + "%")
+                            color: root.colPri
+                            font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                        }
+
+                        Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
+
+                        // Power
+                        Text {
+                            id: powerButton
+                            text: "⏻"
+                            color: root.colPri
                             font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: Hyprland.dispatch("workspace " + (index + 1))
+                                anchors.margins: -4
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    calendarPopup.visible = false
+                                    powerPopup.visible = !powerPopup.visible
+                                }
                             }
                         }
-                    }
-                }
-
-                // Center: clock (true bar center, independent of side widths)
-                Text {
-                    id: clockLabel
-                    anchors.centerIn: parent
-                    color: root.colPri
-                    font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-                    text: root.clockText
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton
-                        onClicked: (mouse) => {
-                            if (mouse.button == Qt.LeftButton) {
-                                if (!calendarPopup.visible)
-                                    calendarWidget.goToToday()
-                                calendarPopup.visible = !calendarPopup.visible
-                            }
-                        }
-                    }
-                }
-
-                // Right: status modules
-                Row {
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 8
-
-                    Text {
-                        text: "Theme: " + Theme.jsonData.name
-                        color: root.colPri
-                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-                    }
-
-                    Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
-
-                    Text {
-                        text: root.volMuted ? "🔇" : (root.volAmount < 50) ? "🔈 " + root.volAmount : (root.volAmount < 75) ? "🔉 " + root.volAmount : "🔊 " + root.volAmount
-                        color: root.colPri
-                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-                    }
-
-                    Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
-
-                    Text {
-                        text: "CPU: " + root.cpuUsage + "%"
-                        color: root.colPri
-                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-                    }
-
-                    Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
-
-                    Text {
-                        text: "Mem: " + root.memUsage + "%"
-                        color: root.colPri
-                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-                    }
-
-                    Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
-
-                    Text {
-                        text: root.networkConnected ? "🛜 " + root.network : "Disconected"
-                        color: root.colPri
-                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
-                    }
-
-                    Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
-
-                    Text {
-                        text: root.isCharged ? "Charged" : (root.isCharging ? "Bat: " + root.batUsage + "% ⚡" : "Bat: " + root.batUsage + "%")
-                        color: root.colPri
-                        font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
                     }
                 }
             }
@@ -337,6 +372,23 @@ Scope {
 
                 Callendar {
                     id: calendarWidget
+                }
+            }
+
+            PopupWindow {
+                id: powerPopup
+                anchor.window: bar
+                anchor.rect.x: bar.width - width - 8
+                anchor.rect.y: bar.height + 4
+                implicitWidth: powerMenu.implicitWidth
+                implicitHeight: powerMenu.implicitHeight
+                color: "transparent"
+                grabFocus: true
+                visible: false
+
+                PowerMenu {
+                    id: powerMenu
+                    onCloseRequested: powerPopup.visible = false
                 }
             }
         }
