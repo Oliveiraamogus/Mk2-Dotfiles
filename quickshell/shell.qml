@@ -277,6 +277,7 @@ Scope {
                             onClicked: (mouse) => {
                                 if (mouse.button == Qt.LeftButton) {
                                     powerPopup.visible = false
+                                    themePopup.visible = false
                                     if (!calendarPopup.visible)
                                         calendarWidget.goToToday()
                                     calendarPopup.visible = !calendarPopup.visible
@@ -287,14 +288,28 @@ Scope {
 
                     // Right: status modules
                     Row {
+                        id: rightRow
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 8
 
                         Text {
+                            id: themeLabel
                             text: "Theme: " + Theme.jsonData.name
                             color: root.colPri
                             font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                            MouseArea {
+                                anchors.fill: parent
+                                anchors.margins: -4
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    calendarPopup.visible = false
+                                    powerPopup.visible = false
+                                    if (!themePopup.visible)
+                                        themeMenu.refresh()
+                                    themePopup.visible = !themePopup.visible
+                                }
+                            }
                         }
 
                         Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
@@ -351,6 +366,7 @@ Scope {
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: {
                                     calendarPopup.visible = false
+                                    themePopup.visible = false
                                     powerPopup.visible = !powerPopup.visible
                                 }
                             }
@@ -372,6 +388,24 @@ Scope {
 
                 Callendar {
                     id: calendarWidget
+                }
+            }
+
+            PopupWindow {
+                id: themePopup
+                anchor.window: bar
+                // Aligns with the left edge of the right-side row, i.e. right under "Theme: ..."
+                anchor.rect.x: bar.width - 8 - rightRow.width
+                anchor.rect.y: bar.height + 4
+                implicitWidth: themeMenu.implicitWidth
+                implicitHeight: themeMenu.implicitHeight
+                color: "transparent"
+                grabFocus: true
+                visible: false
+
+                ThemeMenu {
+                    id: themeMenu
+                    onCloseRequested: themePopup.visible = false
                 }
             }
 

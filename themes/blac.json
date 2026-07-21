@@ -7,13 +7,13 @@
   "supportsModes": true,
   "defaultMode": "dark",
   "preview": {
-    "background": "#086C46",
-    "accent": "#4AD29E",
+    "background": "#080F10",
+    "accent": "#D0D3D2",
     "description": "gren"
   },
   "colors": {
-    "primary": "#4AD29E",
-    "secondary": "#086C46",
+    "primary": "#D0D3D2",
+    "secondary": "#080F10",
     "background": "#AA050912"
   },
   "fonts": {

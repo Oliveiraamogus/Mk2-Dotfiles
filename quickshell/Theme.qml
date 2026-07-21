@@ -14,10 +14,10 @@ FloatingWindow {
     FileView {
         id: jsonFile
         path: "/home/manel/.config/themes/current.json"
-        
 
         blockLoading: true
-
+        watchChanges: true
+        onFileChanged: reload()
     }
 
     readonly property var jsonData: JSON.parse(jsonFile.text())
