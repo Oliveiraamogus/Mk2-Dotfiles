@@ -28,9 +28,17 @@ if [ ${#wallpapers[@]} -eq 0 ]; then
 fi
 WALLPAPER="${wallpapers[0]}"
 
-# Read primary / secondary from theme json (#RRGGBB -> RRGGBB)
+# Read colors from theme json
 PRIMARY=$(grep -o '"primary": *"[^"]*"' "$THEME_SRC" | head -1 | sed 's/.*#\([0-9A-Fa-f]*\).*/\1/')
 SECONDARY=$(grep -o '"secondary": *"[^"]*"' "$THEME_SRC" | head -1 | sed 's/.*#\([0-9A-Fa-f]*\).*/\1/')
+ACCENT=$(grep -o '"accent": *"[^"]*"' "$THEME_SRC" | head -1 | sed 's/.*"\([^"]*\)".*/\1/')
+# colors.background is second "background" key (#AARRGGBB -> #RRGGBBAA for CSS)
+BG_RAW=$(grep -o '"background": *"[^"]*"' "$THEME_SRC" | sed -n '2p' | sed 's/.*"\([^"]*\)".*/\1/')
+if [ ${#BG_RAW} -eq 9 ]; then
+    BG_COLOR="#${BG_RAW:3}${BG_RAW:1:2}"
+else
+    BG_COLOR="$BG_RAW"
+fi
 
 # Wallpaper
 hyprctl hyprpaper wallpaper ",$WALLPAPER"
@@ -38,6 +46,11 @@ hyprctl hyprpaper wallpaper ",$WALLPAPER"
 # Border colors
 hyprctl keyword general:col.active_border "rgb($PRIMARY)"
 hyprctl keyword general:col.inactive_border "rgb($SECONDARY)"
+
+# Anyrun colors (accent + background from theme)
+ANYRUN_CSS="$CONFIG_DIR/anyrun/style.css"
+sed -i "s|^@define-color accent .*|@define-color accent $ACCENT;|" "$ANYRUN_CSS"
+sed -i "s|^@define-color bg-color .*|@define-color bg-color $BG_COLOR;|" "$ANYRUN_CSS"
 
 # Kitty theme — pick one and uncomment:
 # kitten theme 'Base2Tone Field Dark'

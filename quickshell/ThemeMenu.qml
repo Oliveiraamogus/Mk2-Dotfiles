@@ -56,29 +56,23 @@ Item {
                 id=$(basename "$f" .json)
                 [ "$id" = "current" ] && continue
                 [ "$id" = "catppuccin_example" ] && continue
-                name="$id"
-                primary=$(grep -m1 '"primary"' "$f" | sed -E 's/.*"primary": *"([^"]*)".*/\\1/')
-                secondary=$(grep -m1 '"secondary"' "$f" | sed -E 's/.*"secondary": *"([^"]*)".*/\\1/')
                 wp=$(ls "$HOME/.config/Assets/Wallpapers/$id".* 2>/dev/null | head -1)
                 script="$HOME/.config/scripts/$id.sh"
                 has=0
                 [ -x "$script" ] && has=1
-                printf '%s|||%s|||%s|||%s|||%s|||%s\\n' "$id" "$name" "$primary" "$secondary" "$wp" "$has"
+                printf '%s|||%s|||%s\\n' "$id" "$wp" "$has"
             done
         `]
         stdout: SplitParser {
             onRead: data => {
                 if (!data) return
                 var parts = data.split("|||")
-                if (parts.length < 6) return
+                if (parts.length < 3) return
                 var list = root.themeList.slice()
                 list.push({
                     themeId: parts[0],
-                    name: parts[1].length ? parts[1] : parts[0],
-                    primary: parts[2].length ? parts[2] : "#888888",
-                    secondary: parts[3].length ? parts[3] : "#444444",
-                    wallpaper: parts[4],
-                    hasScript: parts[5] === "1"
+                    wallpaper: parts[1],
+                    hasScript: parts[2] === "1"
                 })
                 root.themeList = list
             }
@@ -134,9 +128,9 @@ Item {
                         width: parent.width
                         height: root.cardHeight - 34
                         radius: 6
-                        color: modelData.secondary
+                        color: root.colSec
                         border.width: 1
-                        border.color: modelData.primary
+                        border.color: root.colPri
 
                         Image {
                             anchors.fill: parent
@@ -160,7 +154,7 @@ Item {
                         width: parent.width
                         horizontalAlignment: Text.AlignHCenter
                         elide: Text.ElideRight
-                        text: modelData.name
+                        text: modelData.themeId
                         color: root.colPri
                         font { family: root.fontFamily; pixelSize: root.fontSize - 2; bold: true }
                     }
