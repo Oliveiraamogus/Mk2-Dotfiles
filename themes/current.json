@@ -1,20 +1,20 @@
 {
-  "name": "ligt_gren",
-  "id": "ligt_gren",
-  "description": "lighter gren theme",
+  "name": "gren_gold",
+  "id": "gren_gold",
+  "description": "more like dak gren_gold really",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
   "defaultMode": "dark",
   "preview": {
-    "background": "#223A04",
-    "accent": "#989001",
-    "description": "ligt_gren"
+    "background": "#6B6540",
+    "accent": "#E3BE95",
+    "description": "gren_gold"
   },
   "colors": {
-    "primary": "#989001",
-    "secondary": "#223A04",
-    "background": "#AA54657d"
+    "primary": "#E3BE95",
+    "secondary": "#6B6540",
+    "background": "#AA17190A"
   },
   "fonts": {
     "display": {

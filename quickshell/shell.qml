@@ -278,6 +278,7 @@ Scope {
                                 if (mouse.button == Qt.LeftButton) {
                                     powerPopup.visible = false
                                     themePopup.visible = false
+                                    wifiPopup.visible = false
                                     if (!calendarPopup.visible)
                                         calendarWidget.goToToday()
                                     calendarPopup.visible = !calendarPopup.visible
@@ -305,6 +306,7 @@ Scope {
                                 onClicked: {
                                     calendarPopup.visible = false
                                     powerPopup.visible = false
+                                    wifiPopup.visible = false
                                     if (!themePopup.visible)
                                         themeMenu.refresh()
                                     themePopup.visible = !themePopup.visible
@@ -339,9 +341,23 @@ Scope {
                         Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
 
                         Text {
-                            text: root.networkConnected ? "🛜 " + root.network : "Disconected"
+                            id: networkLabel
+                            text: root.networkConnected ? "🛜 " + root.network : "Disconnected"
                             color: root.colPri
                             font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
+                            MouseArea {
+                                anchors.fill: parent
+                                anchors.margins: -4
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    calendarPopup.visible = false
+                                    themePopup.visible = false
+                                    powerPopup.visible = false
+                                    if (!wifiPopup.visible)
+                                        wifiMenu.refresh()
+                                    wifiPopup.visible = !wifiPopup.visible
+                                }
+                            }
                         }
 
                         Rectangle { width: 1; height: 16; anchors.verticalCenter: parent.verticalCenter; color: root.colSec }
@@ -367,6 +383,7 @@ Scope {
                                 onClicked: {
                                     calendarPopup.visible = false
                                     themePopup.visible = false
+                                    wifiPopup.visible = false
                                     powerPopup.visible = !powerPopup.visible
                                 }
                             }
@@ -406,6 +423,27 @@ Scope {
                 ThemeMenu {
                     id: themeMenu
                     onCloseRequested: themePopup.visible = false
+                }
+            }
+
+            PopupWindow {
+                id: wifiPopup
+                anchor.window: bar
+                // Sit under the network label, clamped so it stays on-screen
+                anchor.rect.x: {
+                    var x = bar.width - 8 - rightRow.width + networkLabel.x
+                    return Math.max(8, Math.min(x, bar.width - width - 8))
+                }
+                anchor.rect.y: bar.height + 4
+                implicitWidth: wifiMenu.implicitWidth
+                implicitHeight: wifiMenu.implicitHeight
+                color: "transparent"
+                grabFocus: true
+                visible: false
+
+                WifiMenu {
+                    id: wifiMenu
+                    onCloseRequested: wifiPopup.visible = false
                 }
             }
 
