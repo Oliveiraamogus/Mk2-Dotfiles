@@ -70,7 +70,7 @@ case "$THEME" in
         kitten theme 'Birds Of Paradise'
         ;;
     red)
-        # kitten theme 'TODO'
+        kitten theme 'Fun Forrest'
         ;;
     wite)
         # kitten theme 'TODO'
