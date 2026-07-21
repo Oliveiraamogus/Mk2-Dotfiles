@@ -1,20 +1,20 @@
 {
-  "name": "gren",
-  "id": "gren",
-  "description": "more like dak gren really",
+  "name": "ligt_gren",
+  "id": "ligt_gren",
+  "description": "lighter gren theme",
   "author": "manel",
   "version": "1.0.0",
   "supportsModes": true,
   "defaultMode": "dark",
   "preview": {
-    "background": "#6B6540",
-    "accent": "#E3BE95",
-    "description": "gren"
+    "background": "#223A04",
+    "accent": "#989001",
+    "description": "ligt_gren"
   },
   "colors": {
-    "primary": "#E3BE95",
-    "secondary": "#6B6540",
-    "background": "#AA17190A"
+    "primary": "#989001",
+    "secondary": "#223A04",
+    "background": "#AA54657d"
   },
   "fonts": {
     "display": {

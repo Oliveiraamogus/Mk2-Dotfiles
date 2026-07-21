@@ -64,7 +64,7 @@ case "$THEME" in
         kitten theme 'Atelier Estuary Dark'
         ;;
     ligt_gren)
-        # kitten theme 'TODO'
+        kitten theme 'Everforest Light Soft'
         ;;
     darc_red)
         kitten theme 'Birds Of Paradise'
