@@ -1,3 +1,4 @@
 #!/bin/bash
 # Apply the gren theme
-exec "$(dirname "$0")/selector.sh" gren
+"$(dirname "$0")/selector.sh" gren
+kitten theme 'Base2Tone Field Dark'

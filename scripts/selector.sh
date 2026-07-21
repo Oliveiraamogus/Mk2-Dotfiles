@@ -52,33 +52,5 @@ ANYRUN_CSS="$CONFIG_DIR/anyrun/style.css"
 sed -i "s|^@define-color accent .*|@define-color accent $ACCENT;|" "$ANYRUN_CSS"
 sed -i "s|^@define-color bg-color .*|@define-color bg-color $BG_COLOR;|" "$ANYRUN_CSS"
 
-# Kitty theme per theme
-case "$THEME" in
-    gren)
-        kitten theme 'Base2Tone Field Dark'
-        ;;
-    blac)
-        kitten theme 'Adwaita Dark'
-        ;;
-    gren_gold)
-        kitten theme 'Atelier Estuary Dark'
-        ;;
-    ligt_gren)
-        kitten theme 'Everforest Light Soft'
-        ;;
-    darc_red)
-        kitten theme 'Birds Of Paradise'
-        ;;
-    red)
-        kitten theme 'Fun Forrest'
-        ;;
-    wite)
-        kitten theme 'Atom One Light'
-        ;;
-    *)
-        # no kitty theme mapped yet
-        ;;
-esac
-
 # Set current theme
 cp "$THEME_SRC" "$THEME_DST"

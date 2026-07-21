@@ -1,3 +1,4 @@
 #!/bin/bash
 # Apply the wite theme
-exec "$(dirname "$0")/selector.sh" wite
+"$(dirname "$0")/selector.sh" wite
+kitten theme 'Atom One Light'

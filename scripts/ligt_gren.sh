@@ -1,3 +1,4 @@
 #!/bin/bash
 # Apply the ligt_gren theme
-exec "$(dirname "$0")/selector.sh" ligt_gren
+"$(dirname "$0")/selector.sh" ligt_gren
+kitten theme 'Everforest Light Soft'
