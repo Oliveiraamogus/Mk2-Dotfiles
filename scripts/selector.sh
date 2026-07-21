@@ -73,7 +73,7 @@ case "$THEME" in
         kitten theme 'Fun Forrest'
         ;;
     wite)
-        # kitten theme 'TODO'
+        kitten theme 'Atom One Light'
         ;;
     *)
         # no kitty theme mapped yet
