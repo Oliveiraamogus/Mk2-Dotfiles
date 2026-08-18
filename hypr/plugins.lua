@@ -1,0 +1,33 @@
+-- Plugin configuration (previously plugins.conf)
+
+--hl.config({
+--  debug = { overlay = false },
+--
+--  plugin = {
+--    hyprbars = {
+--      bar_height = 100,
+--      bar_color = 111,
+--    },
+--  },
+--})
+--
+---- Buttons (previously: hyprbars-button = ...)
+---- Guard against missing plugin so config load doesn't abort.
+--if hl.plugin and hl.plugin.hyprbars and hl.plugin.hyprbars.add_button then
+--  hl.plugin.hyprbars.add_button({
+--    bg_color = "rgb(ff4040)",
+--    fg_color = "rgb(000000)",
+--    size = 10,
+--    icon = "X",
+--    action = "hyprctl dispatch 'hl.dsp.window.close()'",
+--  })
+--
+--  hl.plugin.hyprbars.add_button({
+--    bg_color = "rgb(eeee11)",
+--    fg_color = "rgb(000000)",
+--    size = 10,
+--    icon = "-",
+--    action = "hyprctl dispatch 'hl.dsp.window.fullscreen()'",
+--  })
+--end
+----
