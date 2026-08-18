@@ -43,9 +43,8 @@ fi
 # Wallpaper
 hyprctl hyprpaper wallpaper ",$WALLPAPER"
 
-# Border colors
-hyprctl keyword general:col.active_border "rgb($PRIMARY)"
-hyprctl keyword general:col.inactive_border "rgb($SECONDARY)"
+# Border colors (Lua config: hyprctl keyword no longer applies)
+hyprctl eval "hl.config({ general = { col = { active_border = 'rgb($PRIMARY)', inactive_border = 'rgb($SECONDARY)' } } })"
 
 # Anyrun colors (accent + background from theme)
 ANYRUN_CSS="$CONFIG_DIR/anyrun/style.css"

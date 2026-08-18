@@ -25,6 +25,3 @@ hyprctl hyprpaper wallpaper ",$WALLPAPER"
 PRIMARY=$(grep -o '"primary": *"[^"]*"' "$THEME_SRC" | head -1 | sed 's/.*#\([0-9A-Fa-f]*\).*/\1/')
 SECONDARY=$(grep -o '"secondary": *"[^"]*"' "$THEME_SRC" | head -1 | sed 's/.*#\([0-9A-Fa-f]*\).*/\1/')
 
-# Border colors
-hyprctl keyword general:col.active_border "rgb($PRIMARY)"
-hyprctl keyword general:col.inactive_border "rgb($SECONDARY)"

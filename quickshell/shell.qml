@@ -232,9 +232,9 @@ Scope {
                     acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
                     onWheel: (event) => {
                         if (event.angleDelta.y > 0)
-                            Hyprland.dispatch("workspace -1")
+                            Hyprland.dispatch("hl.dsp.focus({ workspace = '-1' })")
                         else if (event.angleDelta.y < 0)
-                            Hyprland.dispatch("workspace +1")
+                            Hyprland.dispatch("hl.dsp.focus({ workspace = '+1' })")
                     }
                 }
 
@@ -258,7 +258,7 @@ Scope {
                                 font { family: root.fontFamily; pixelSize: root.fontSize; bold: true }
                                 MouseArea {
                                     anchors.fill: parent
-                                    onClicked: Hyprland.dispatch("workspace " + (index + 1))
+                                    onClicked: Hyprland.dispatch("hl.dsp.focus({ workspace = " + (index + 1) + " })")
                                 }
                             }
                         }
